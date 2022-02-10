@@ -5,10 +5,7 @@
 geographical data.
 
 """
-from socket import SO_BROADCAST
-from unicodedata import name
 
-from sklearn.metrics import nan_euclidean_distances
 from floodsystem.station import MonitoringStation
 from numpy import number, sqrt
 from .stationdata import build_station_list
@@ -46,7 +43,7 @@ def rivers_by_station_number(stations, N):
         i=river_name
         list.append(river_name,num_of_stations)
         list.sort(key=lambda x:x[1])
-    return list
+    
     #we now have a list of river names and the number of stations
     #sorted in order of number of station
     N_list= list[-N:]
