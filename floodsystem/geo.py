@@ -6,8 +6,8 @@ geographical data.
 
 """
 
-from floodsystem.station import MonitoringStation
 from numpy import number, sqrt
+from .station import MonitoringStation
 from importlib_metadata import import_module
 from haversine import haversine, Unit
 from .stationdata import build_station_list
@@ -21,49 +21,25 @@ swr=[]
 def stations_within_radius (stations, centre, r) :
     #finding stations distance
     for station in stations:
-        MonitoringStation.coord= (lat,long)
+        lat = station.coord[0]
+        long = station.coord[1]
         x,y = centre
-        dis = sqrt(((x - lat)**2 )+((y-long)**2))
+        dis = haversine(station.coord,centre)
         #if distance is within the radius add to the list
-        if dis < r:
+        if -r< dis < r:
             swr.append(station.name)
         else:
             pass
-    return swr
+    sorted_swr = sorted(swr)
+    return sorted_swr
 
-sorted_swr = sorted(swr)
-print(sorted_swr)
 
-def rivers_by_station_number(stations, N): 
-
-    from floodsystem.geo import stations_by_river
-    #list of rivers and the number of stations in paired entries
-    list=[river_name,num_of_stations]
-    N_list=[]
-
-    for station.river in rivers_with_station(stations):
-        stations_by_river(build_station_list)=num_of_stations
-        station.river =river_name
-        list.append(river_name,num_of_stations)
-        list.sort(key=lambda x:x[1])
-    
-    #we now have a list of river names and the number of stations
-    #sorted in order of number of station
-    N_list= list[-N:]
-    list[-N]= name1,num1
-    if list[name1,num of stations]:
-        pass
-    elif list[river_name,num1] :
-        N_list.append(river_name,num_of_stations)
-
-return N_list
 
 def stations_by_distance(stations, p):
 
     station_distances=[] #empty list for station name and dist from p
 
     for station in stations:
-
         distance=float(haversine(p,station.coord)) #set distance for each loop as dist from p
 
         station_distances.append((station.name, distance)) #adds a tuple of a station name and it's distance from p to empty list
@@ -72,11 +48,10 @@ def stations_by_distance(stations, p):
 
     return sorted_station_distances
 
-   
-
- 
 
 def rivers_with_station(stations):
+
+    stations=[]
 
     list_rivers=[]
 
@@ -105,4 +80,32 @@ def stations_by_river(stations):
             dict_rivers[station.river]=[station.name] #creates new river key if river isn't in dictionary
 
     return dict_rivers
+
+    
+def rivers_by_station_number(stations, N): 
+
+    N_list=[]
+    
+    for station in stations:
+        river_name = station.name
+        rivers_dict =stations_by_river(stations)
+        num_of_stations=0
+        try:
+            num_of_stations = len(rivers_dict[river_name])
+        except:
+            print("missing river")
+        8
+        list= [river_name,num_of_stations]
+        list.append((river_name,num_of_stations))
+        
+
+    N_list= list[-N:]
+    (name1,num1) = list[-N]
+    if list [name1,num_of_stations] :
+        pass
+    elif list[river_name,num1] :
+        N_list.append(river_name,num_of_stations)
+    else :
+        pass
+    return N_list
     
