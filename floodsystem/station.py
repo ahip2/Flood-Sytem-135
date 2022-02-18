@@ -9,10 +9,6 @@ for manipulating/modifying station data
 """
 
 
-from sklearn.manifold import trustworthiness
-from sqlalchemy import false, true
-
-
 class MonitoringStation:
     """This class represents a river level monitoring station"""
 
@@ -49,12 +45,12 @@ class MonitoringStation:
         NoneType= type(None)
         """Checks that the typical range of the high/low flood level are formatted correctly"""
         if type(self.typical_range)== NoneType: #checks if value is 'missing'
-            return false
+            return False
         elif self.typical_range[0]<= self.typical_range[1]:
             #checks that higher is more than lower level
-            return true
+            return True
         else:
-            return false
+            return False
 
 def inconsistent_typical_range_stations(stations):
     """Creates a list of any station where the typical range is formatted incorrectly, or no data is provided"""
