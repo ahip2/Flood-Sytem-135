@@ -12,6 +12,7 @@ from importlib_metadata import import_module
 from haversine import haversine, Unit
 from .stationdata import build_station_list
 from .utils import sorted_by_key
+from operator import itemgetter
 
 
 #empty list
@@ -72,40 +73,44 @@ def stations_by_river(stations):
     for station in stations:#iterates over all the station objects in the given list
 
         if station.river in dict_rivers.keys(): #checks to see if river is already in dictionary
-
-            dict_rivers[station.river].append(station.name) #adds new station name if river has already been added as a key
+            dict_rivers[station.river].append(station)
 
         else:
-
-            dict_rivers[station.river]=[station.name] #creates new river key if river isn't in dictionary
+            dict_rivers[station.river]= station #creates new river key if river isn't in dictionary
 
     return dict_rivers
 
     
 def rivers_by_station_number(stations, N): 
 
+    #empty list
     N_list=[]
-    
-    for station in stations:
-        river_name = station.name
-        rivers_dict =stations_by_river(stations)
-        num_of_stations=0
-        try:
-            num_of_stations = len(rivers_dict[river_name])
-        except:
-            print("missing river")
-        8
-        list= [river_name,num_of_stations]
-        list.append((river_name,num_of_stations))
-        
+    river_list=[]
+    #creates a dict with station.river as keys and station objects as values
+    rivers_dict = stations_by_river(stations)
+    num_of_stations = 0
 
-    N_list= list[-N:]
-    (name1,num1) = list[-N]
-    if list [name1,num_of_stations] :
-        pass
-    elif list[river_name,num1] :
-        N_list.append(river_name,num_of_stations)
-    else :
-        pass
+    for station in stations:
+        
+        #the send value in each tuple is the number of stations on each river
+        num_of_stations = len(rivers_dict[station.river])
+        # adds each pair of values to a new list
+        river_list.append((station.river,num_of_stations))
+        #sorts the list by number of stations smallest to largest
+        river_list_sorted = sorted(river_list,key=itemgetter(1))
+
+    print ()
+
+    #creates another list which contains the N largest values of the previous river list
+    N_list= river_list_sorted[-N:]
+    (name1,num1) = river_list_sorted[-N]
+    
+    #for all the rivers
+    for station.river in river_list_sorted:
+        #if the river is 
+        if river_list_sorted [0] == name1 :
+            pass
+        elif river_list_sorted [1] == num1:
+            N_list.append((station.river,num_of_stations))
     return N_list
     
