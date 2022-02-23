@@ -87,30 +87,36 @@ def rivers_by_station_number(stations, N):
     N_list=[]
     river_list=[]
     #creates a dict with station.river as keys and station objects as values
-    rivers_dict = stations_by_river(stations)
-    num_of_stations = 0
+    #rivers_dict = stations_by_river(stations)
+    #num_of_stations = 0
 
-    for station in stations:
-        
+    for stat in stations:
+        river_list.append(stat.river)
+
+    for river in river_list:
         #the send value in each tuple is the number of stations on each river
-        num_of_stations = len(rivers_dict[station.river])
+        num_of_stations = river_list.count(river)
         # adds each pair of values to a new list
-        river_list.append((station.river,num_of_stations))
+        N_list.append((river,num_of_stations))
         #sorts the list by number of stations smallest to largest
-        river_list_sorted = sorted(river_list,key=itemgetter(1))
-
-    print ()
+    #N_list_sorted = sorted(N_list,key=itemgetter(1))
+    N_list = list(dict.fromkeys(N_list))
+    N_list.sort(key=lambda x:x[1],reverse=True) 
+    #print ()
+    while N_list[N-1][1]==N_list[N][1]:
+        N+=1
 
     #creates another list which contains the N largest values of the previous river list
-    N_list= river_list_sorted[-N:]
-    (name1,num1) = river_list_sorted[-N]
+    N_list1= N_list[0:N]
+    return N_list1
+    #(name1,num1) = N_list_sorted[-N]
     
     #for all the rivers
-    for station.river in river_list_sorted:
-        #if the river is 
-        if river_list_sorted [0] == name1 :
-            pass
-        elif river_list_sorted [1] == num1:
-            N_list.append((station.river,num_of_stations))
-    return N_list
+    #for station.river in N_list_sorted:
+    #    #if the river is 
+    #    if N_list_sorted [0] == name1 :
+    #        pass
+    #    elif N_list_sorted [1] == num1:
+    #        N_list.append((station.river,num_of_stations))
+    #return N_list_sorted
     
