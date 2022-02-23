@@ -72,11 +72,11 @@ def stations_by_river(stations):
 
     for station in stations:#iterates over all the station objects in the given list
 
-        if station.river in dict_rivers.keys(): #checks to see if river is already in dictionary
-            dict_rivers[station.river].append(station)
+        if station.river in dict_rivers.keys(): #checks to see if river is already in dict
+            dict_rivers[station.river].append(station.name)
 
         else:
-            dict_rivers[station.river]= station #creates new river key if river isn't in dictionary
+            dict_rivers[station.river]= [station.name] #creates new river key if river isn't in dictionary
 
     return dict_rivers
 
