@@ -5,8 +5,6 @@
 geographical data.
 
 """
-
-from numpy import number, sqrt
 from .station import MonitoringStation
 from importlib_metadata import import_module
 from haversine import haversine, Unit
