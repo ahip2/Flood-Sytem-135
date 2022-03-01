@@ -6,11 +6,10 @@ from floodsystem.stationdata import update_water_levels
 
 import matplotlib.pyplot as plt
 
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from floodsystem.datafetcher import fetch_measure_levels
 
-import numpy as np
 
 def plot_water_levels(station, dates, levels):
 
@@ -56,7 +55,6 @@ from floodsystem.stationdata import build_station_list
 
 import datetime
 
- 
 
 def run():
 
@@ -75,9 +73,6 @@ def run():
         dates, levels = fetch_measure_levels(station.measure_id,dt=datetime.timedelta(days=dt))
 
         plot_water_levels(station,dates,levels)
-
-
-
 
 
 if __name__ == "__main__":
