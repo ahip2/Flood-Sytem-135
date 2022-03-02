@@ -1,18 +1,13 @@
 
-
-from click import pass_obj
-
-
 def stations_level_over_threshold(stations,tol):    
 
     for station in stations:
         
+
         over_threshold_list=[] #empty list
 
-        if station.relative_water_level() == None or station.relative_water_level() < tol: #doesn't include stations with water level below threshold
-            pass
-        else: 
-            over_threshold_list.append(station.name,station.relative_water_level)
+        if type == float and station.relative_water_level() >= tol:
+                over_threshold_list.append((station.name,station.relative_water_level))
     
     sorted_ot_list = over_threshold_list.sort(key=lambda a: a[1],reverse=True)
     
