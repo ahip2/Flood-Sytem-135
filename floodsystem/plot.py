@@ -12,6 +12,12 @@ def plot_water_levels(station, dates, levels):
 
     plt.plot(t, level)
 
+   
+
+ 
+
+    # Add axis labels, rotate date labels and add plot title
+
     plt.xlabel('date')
 
     plt.ylabel('water level (m)')

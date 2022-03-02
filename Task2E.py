@@ -1,18 +1,22 @@
-from floodsystem.stationdata import build_station_list
+import datetime
 
-from datetime import datetime
+from floodsystem.flood import stations_high_rel_level
+
+from floodsystem.plot import plot_water_levels
 
 from floodsystem.datafetcher import fetch_measure_levels
 
-from floodsystem.flood import stations_highest_rel_level
+from floodsystem.stationdata import build_station_list
 
-from floodsystem.plot import plot_water_levels
+import datetime
+
+ 
 
 def run():
 
     stations=build_station_list()
 
-    s=stations_highest_rel_level(stations,5)
+    s=stations_high_rel_level(stations,5)
 
     #gets top 5 relative levelled stations
 
@@ -27,7 +31,11 @@ def run():
         plot_water_levels(station,dates,levels)
 
 
+
+
+
 if __name__ == "__main__":
 
     print("*** Task 2E: CUED Part IA Flood Warning System ***")
 
+    run()
