@@ -9,6 +9,9 @@ for manipulating/modifying station data
 """
 
 
+from sympy import stationary_points
+
+
 class MonitoringStation:
     """This class represents a river level monitoring station"""
 
@@ -52,11 +55,26 @@ class MonitoringStation:
         else:
             return False
 
-def inconsistent_typical_range_stations(stations):
-    """Creates a list of any station where the typical range is formatted incorrectly, or no data is provided"""
-    inconsistent_stations=[] #creates an empty list
-    for station in stations:
-        if MonitoringStation.typical_range_consistent(station)== False: #uses above function to check whether range values are consistent
-            inconsistent_stations.append(station.name)
-    return inconsistent_stations
+    def relative_water_level(self):
+        #latest water level as a fraction of the typical range
+        #typical range low,high
+        self.relative_water_level = None
 
+        if self.typical_range_consistent() == False:
+            return None
+        elif self.latest_level == None:
+            return None
+        else :
+            return (self.latest_level - self.typical_range[0])/ (self.typical_range[1] - self.typical_range[0])
+
+
+
+    
+def inconsistent_typical_range_stations(stations):
+        """Creates a list of any station where the typical range is formatted incorrectly, or no data is provided"""
+        inconsistent_stations=[] #creates an empty list
+        for station in stations:
+            if MonitoringStation.typical_range_consistent(station)== False: #uses above function to check whether range values are consistent
+                inconsistent_stations.append(station.name)
+        return inconsistent_stations
+    
