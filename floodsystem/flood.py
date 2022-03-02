@@ -1,14 +1,15 @@
 
 
+from click import pass_obj
+
+
 def stations_level_over_threshold(stations,tol):    
 
     for station in stations:
         
         over_threshold_list=[] #empty list
 
-        if station.relative_water_level() == None: #doesn't include empty water level entries
-            pass 
-        elif station.relative_water_level() < tol: #doesn't include stations with water level below threshold
+        if station.relative_water_level() == None or station.relative_water_level() < tol: #doesn't include stations with water level below threshold
             pass
         else: 
             over_threshold_list.append(station.name,station.relative_water_level)
