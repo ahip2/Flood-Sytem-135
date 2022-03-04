@@ -11,6 +11,8 @@ for manipulating/modifying station data
 
 from sympy import stationary_points
 
+from floodsystem.stationdata import update_water_levels, build_station_list
+
 
 class MonitoringStation:
     """This class represents a river level monitoring station"""
@@ -56,16 +58,17 @@ class MonitoringStation:
             return False
 
     def relative_water_level(self):
-        #latest water level as a fraction of the typical range
+        #latest water level above lowest typical range bound as a fraction of the typical range
         #typical range low,high
-        self.relative_water_level = None
+        #self.relative_water_level = None
+        update_water_levels(self)
 
         if self.typical_range_consistent() == False:
             return None
         elif self.latest_level == None:
             return None
         else :
-            return (self.latest_level - self.typical_range[0])/ (self.typical_range[1] - self.typical_range[0])
+            return ((self.latest_level - self.typical_range[0])/ (self.typical_range[1] - self.typical_range[0]))
 
 
 
@@ -78,3 +81,8 @@ def inconsistent_typical_range_stations(stations):
                 inconsistent_stations.append(station.name)
         return inconsistent_stations
     
+s = build_station_list()
+update_water_levels(s)
+
+for station in s[0:20]:
+    print(relative_water_level(station))
