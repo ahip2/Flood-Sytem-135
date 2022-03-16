@@ -8,7 +8,7 @@ from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list
 import datetime
 from floodsystem.plot import plot_water_levels
-
+from floodsystem.analysis import polyfit
 
 def run():
 
@@ -26,7 +26,7 @@ def run():
 
         dates, levels = fetch_measure_levels(station.measure_id,dt=datetime.timedelta(days=dt))
 
-        plot_water_levels(station,dates,levels)
+        polyfit(dates,levels,4)
 
 if __name__ == "__main__":
 

@@ -1,17 +1,16 @@
+from floodsystem.utils import sorted_by_key
 
-def stations_level_over_threshold(stations,tol):    
+def stations_level_over_threshold(stations,tol):   
+
+    over_threshold_list=[] #empty list 
 
     for station in stations:
-        
 
-        over_threshold_list=[] #empty list
+        if station.relative_water_level() is not None:
+            if station.relative_water_level() >= tol:
+                over_threshold_list.append((station.name,station.relative_water_level()))
 
-        if type == float and station.relative_water_level() >= tol:
-                over_threshold_list.append((station.name,station.relative_water_level))
-        else:
-            pass
-    
-    sorted_ot_list = over_threshold_list.sort(key=lambda a: a[1],reverse=True)
+    sorted_ot_list = sorted_by_key(over_threshold_list, 1, True)
     
     return sorted_ot_list
 
@@ -22,8 +21,7 @@ def stations_highest_rel_level(stations,N):
     N_highest_level_list = sorted_ot_list[:N] #only the highest N values returned as a list of tuples
     return N_highest_level_list
 
-
-from floodsystem.utils import sorted_by_key    
+   
 from floodsystem.stationdata import update_water_levels
 
 def stations_high_rel_level(stations,N):
