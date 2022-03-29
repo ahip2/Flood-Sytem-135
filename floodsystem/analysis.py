@@ -1,6 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.dates
 #from floodsystem.flood import plot_water_levels, stations_highest_rel_level
 from floodsystem.datafetcher import fetch_measure_levels
 from floodsystem.stationdata import build_station_list
@@ -8,9 +9,12 @@ import datetime
 
 def polyfit(dates, levels, p):
     y = levels
-    x = plt.dates.date2num(dates)
+    x = matplotlib.dates.date2num(dates)
     # Using shifted x values, find coefficient of best-fit
     p_coeff = np.polyfit(x - x[0], y, p)
+
+    d0 = len(dates)
+
 
     # Convert coefficient into a polynomial that can be evaluated
     # e.g. poly(0.3)
@@ -26,3 +30,5 @@ def polyfit(dates, levels, p):
 
     # Display plot
     plt.show()
+    
+    return poly,d0

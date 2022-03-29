@@ -8,23 +8,31 @@ def stations_level_over_threshold(stations,tol):
 
         if station.relative_water_level() is not None:
             if station.relative_water_level() >= tol:
-                over_threshold_list.append((station.name,station.relative_water_level()))
+                over_threshold_list.append((station,station.relative_water_level()))
 
     sorted_ot_list = sorted_by_key(over_threshold_list, 1, True)
     
     return sorted_ot_list
 
-def stations_highest_rel_level(stations,N):
+'''def stations_highest_rel_level(stations,N):
     
     N_highest_level_list=[]
     sorted_ot_list = stations_level_over_threshold(stations,0) #information about relative water level about any level within relative range
     N_highest_level_list = sorted_ot_list[:N] #only the highest N values returned as a list of tuples
-    return N_highest_level_list
+    return N_highest_level_list '''
 
    
 from floodsystem.stationdata import update_water_levels
 
 def stations_high_rel_level(stations,N):
+
+    stations_higher = stations_level_over_threshold(stations, -1000)
+
+    highest_stations = stations_higher[:N]
+    
+    return highest_stations
+
+'''def stations_high_rel_level(stations,N):
 
     """calculates relative water level compared to its typical range, returns 'N' highest"""
 
@@ -36,7 +44,7 @@ def stations_high_rel_level(stations,N):
 
     for station in stations:
 
-        if station.typical_range != None and station.typical_range_consistent and station.latest_level !=None :
+        if station.typical_range != None and station.typical_range_consistent()== True  and station.latest_level !=None :
 
             #only counts stations with consistent data
 
@@ -64,7 +72,7 @@ def stations_high_rel_level(stations,N):
 
     #adds station terms of sorted list to a new list
 
-    return station_only
+    return station_only'''
 
 import datetime
 
@@ -83,7 +91,7 @@ def highest_risk(stations,dt=3,N=10,y=3):
 
     for station in stations:
 
-        if station.typical_range != None and station.typical_range_consistent and station.latest_level !=None:
+        if station.typical_range != None and station.typical_range_consistent() == True and station.latest_level !=None:
 
         #makes sure it only counts stations with consistent data
 
@@ -141,7 +149,9 @@ def highest_risk(stations,dt=3,N=10,y=3):
 
             #applies an arbitrary risk rating based on predicted level
 
-            predicted_levels.append((station.name, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
+            predicted_levels.append((station.town, "Predicted relative level={}".format(predicted_rel_level) ,"Risk={}".format(risk_rating) ))
+
+    predicted_levels = list(dict.fromkeys(predicted_levels))
 
             #adds station, its predicted level and its risk rating a tuple to a list
 
