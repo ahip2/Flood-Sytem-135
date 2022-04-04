@@ -14,7 +14,7 @@ def run():
 
         print(s)
 
-    #works with whole list but takes v. long time
+    #takes really long
 
  
 
